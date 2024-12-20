@@ -12,6 +12,8 @@ router
   .patch(authController.verifyToken, usersController.edit)
   .delete(authController.verifyToken, usersController.delete);
 
+router.route("/:idU/achievements/:idA").post(authController.verifyToken, usersController.unlockAchievement)
+
 router.all("*", function (req, res) {
   res.status(404).json({ message: "users: what???" });
 });

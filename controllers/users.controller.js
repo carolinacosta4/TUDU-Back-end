@@ -4,6 +4,7 @@ const db = require("../models/index.js");
 const config = require("../config/db.config.js");
 const mongoose = require("mongoose");
 const User = db.User;
+const UserAchievements = db.UserAchievements
 
 const handleErrorResponse = (res, error) => {
   return res
@@ -209,3 +210,44 @@ exports.delete = async (req, res) => {
     handleErrorResponse(res, error);
   }
 };
+
+exports.unlockAchievement = async (req, res) => {
+  try {
+      const idA = req.params.idA
+      const achievement = await db.Achievements.findOne({ _id: idA }).exec();
+
+      if (!achievement) {
+          return res.status(404).json({
+              success: false,
+              msg: "Achievement not found",
+          });
+      }
+
+      let unlocked = new UserAchievements({
+          IDuser: req.loggedUserId,
+          IDAchievements: idA
+      });
+
+      const existingAchievement = await UserAchievements.findOne({
+          IDuser: req.loggedUserId,
+          IDAchievements: idA
+      }).exec();
+
+      if (existingAchievement) {
+          return res.status(400).json({
+              success: false,
+              msg: "Achievement is already unlocked",
+          });
+      }
+
+      const newUnlocked = await unlocked.save();
+
+      return res.status(201).json({
+          success: true,
+          msg: "New achievement unlocked!",
+          data: newUnlocked,
+      });
+  } catch (error) {
+      handleErrorResponse(res, error);
+  }
+}
