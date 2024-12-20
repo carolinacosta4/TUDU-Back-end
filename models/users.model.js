@@ -1,5 +1,6 @@
 module.exports = (mongoose) => {
-  const schema = new mongoose.Schema({
+  const schema = new mongoose.Schema(
+    {
       name: { type: String, required: true },
       email: { type: String, required: true, unique: true },
       password: { type: String, required: true },
@@ -10,11 +11,14 @@ module.exports = (mongoose) => {
       vibration: { type: Boolean, default: true, required: true },
       darkMode: { type: Boolean, default: false, required: true },
       isDeactivated: { type: Boolean, default: false, required: true },
+      onboardingSeen: { type: Boolean, default: false, required: true },
       IDmascot: { type: mongoose.Schema.Types.ObjectId, ref: "Mascot" },
-  }, {
+    },
+    {
       collection: "user",
-      timestamps: false
-  });
+      timestamps: false,
+    }
+  );
 
   const User = mongoose.model("User", schema);
   return User;
