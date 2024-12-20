@@ -33,7 +33,7 @@ exports.findUser = async (req, res) => {
       });
 
     const user = await User.findById(req.params.idU)
-      .populate("UserId", "-_id -email -password -__v")
+      // .populate("UserId", "-_id -email -password -__v")
       .select("-_id -__v -password")
       .exec();
 
