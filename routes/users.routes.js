@@ -16,6 +16,8 @@ router
   .route("/:idU/onboarding")
   .patch(authController.verifyToken, usersController.editOnboarding);
 
+router.route("/:idU/achievements/:idA").post(authController.verifyToken, usersController.unlockAchievement)
+
 router.all("*", function (req, res) {
   res.status(404).json({ message: "users: what???" });
 });

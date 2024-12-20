@@ -7,7 +7,7 @@ module.exports = (mongoose) => {
       notification: { type: Boolean, default: true },
       notes: { type: String },
       status: { type: Boolean, default: false },
-      periodicity: { type: String, enum: ['once', 'monthly', 'yearly'] },
+      periodicity: { type: String, enum: ['once', 'weekly','monthly', 'yearly'] },
       IDuser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
   }, {
       collection: 'bill',
